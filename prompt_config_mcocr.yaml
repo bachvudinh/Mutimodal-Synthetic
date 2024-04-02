@@ -1,0 +1,100 @@
+#
+conversation:
+  type: conversation
+  system_prompt: >
+    Bạn là một trợ lý Trí Tuệ Nhân Tạo về hình ảnh hóa đơn được xuất ra từ một vài siêu thị, và bạn đang nhìn vào một bức ảnh duy nhất. Nhiệm vụ của bạn là thiết kế một cuộc trò truyện giữa hai người với các thông tin đi kèm với bức ảnh và người hỏi đang muốn biết về những thông tin này về bức ảnh. Hãy tưởng tượng như thế hai người đều nhìn thấy bức ảnh.
+  
+    Thiết kế một cuộc trò chuyện mà bạn sẽ đóng vai người hỏi và trả lời về bức ảnh này nhưng sẽ được cung cấp dưới dạng các thông tin được trích xuất và phải tưởng tượng như đang nhìn thấy bức ảnh hóa đơn đang chứa những thông tin này. Các câu trả lời nên mang tông giọng của một trợ lý Trí Tuệ Nhân Tạo về hình ảnh đang nhìn thấy hình ảnh và trả lời câu hỏi. 
+    Đầu vào có thể đủ hoặc không đủ các trường thông tin sau:
+    - Đơn vị xuất hóa đơn/bán hàng
+    - Địa chỉ mà nơi xuất hóa đơn/ bán hàng
+    - Thời gian hóa đơn được xuất
+    - Tổng tiền phải thành toán
+
+    Hãy hỏi những câu hỏi để trích xuất những trường thông tin quan trọng trong hình ảnh hóa đơn mà bạn nhìn thấy.
+    Hãy đặt các câu hỏi đa dạng và đưa ra các câu trả lời tương ứng.
+    Không đề cập đến hỏi những câu hỏi mà chứa quá nhiều thông tin. Hãy hỏi từng thông tin nhỏ và dễ trả lời mỗi lượt hỏi.
+    Bạn chỉ đặt những câu hỏi mà có câu trả lời rõ ràng thỏa mãn các điều kiện sau:
+    (1) mà người trả lời có thể nhìn thấy các thông tin này trong ảnh và có thể tự tin trả lời những câu hỏi này 
+    (2) mà người trả lời có thể tự tin trả lời khi nhìn vào ảnh rằng thông tin này không có trong ảnh
+    Không và nghiêm cấm đặt những câu hỏi mà không liên quan đến các trường thông tin trong đầu vào được cung cấp và những câu hỏi không thể được trả lời một cách tự tin và rõ ràng.
+    Tuyệt đối không đặt những câu hỏi đã chứa cả câu trả lời trong đó.
+    
+    Hãy đặt cả những câu hỏi đơn giản để truy xuất thông tin chẳng hạn như hỏi về địa chi mà hóa đơn được xuất ra,,... nhưng một lần nữa nhắc lại đừng hỏi những thông tin chi tiết mà không thể trả lời chắc chắn và phải được nhìn thầy trong ảnh.
+  split_user_assistant: ===
+  stopwords: ["Câu hỏi:", "Câu trả lời:"]
+  inputs:
+    - captions
+  examples:
+    - input: >
+        Đơn vị bán là: co.op mart, Co.opMart HAU GIANG,
+        Địa chỉ xuất hóa đơn là: 188 Hau Giang, P.6, Q.6, TpHCM, Dat hang qua DT: 028.39.600.913,
+        Thời gian xuất hóa đơn là: Ngày: 21/05/2020, 20 : 42 : 52,
+        Tổng tiền phải thanh toán: Tong so tien thanh toan là 16,200.00
+      output: >
+        Câu hỏi:
+        Ở địa chỉ nào hóa đơn trên được xuất ra? Hãy ghi lại chi tiết địa chỉ được in trên hóa đơn.
+        ===
+        Câu trả lời:
+        Hóa đơn trên được xuất ra tại địa chỉ: 188 Hau Giang, Phường 6, Quận 6, Thành phố Hồ Chí Minh.
+        ===
+        Câu hỏi:
+        Tổng số tiền mà người mua hàng cần thanh toán là bao nhiêu? Vui lòng đọc số tiền thanh toán được in trên hóa đơn và chuyển sang dạng chữ.
+        ===
+        Câu trả lời:
+        Tổng số tiền mà người mua hàng cần thanh toán là 16,200.00, đọc thành chữ là mười sáu nghìn hai trăm đồng.
+        ===
+        Câu hỏi:
+        Hóa đơn trên được xuất ra từ đơn vị bán nào?
+        ===
+        Câu trả lời:
+        Hóa đơn trên được xuất ra từ Co.opMart HAU GIANG, một chi nhánh của Co.op Mart.
+        ===
+        Câu hỏi:
+        Xin mô tả một chút về Co.op Mart và Co.opMart HAU GIANG.
+        ===
+        Câu trả lời:
+        Co.op Mart là một chuỗi siêu thị bán lẻ hàng đầu tại Việt Nam, cung cấp nhiều mặt hàng tiêu dùng từ thực phẩm đến hàng hóa tiêu dùng khác. Co.opMart HAU GIANG là một trong các cửa hàng thuộc hệ thống Co.op Mart tại Hậu Giang.
+        ===
+        Câu hỏi:
+        Hóa đơn trên được xuất vào thời gian nào? Vui lòng chỉ rõ ngày, tháng, năm và giờ, phút, giây được ghi trên hóa đơn.
+        ===
+        Câu trả lời:
+        Hóa đơn này được xuất vào ngày 21 tháng 5 năm 2020, vào lúc 20:42:52.
+    - input: >
+        Đơn vị bán là: VinCommerce,
+        Địa chỉ xuất hóa đơn là: VM + QNH Dự án quỹ đất đường sắt, DA QĐ doc tuyến ĐS Tổ 3 Khu 2, P.Cẩm Sơn, TP.Cẩm Phả, T.QN,
+        Thời gian xuất hóa đơn là: Ngày bán: 15/08/2020 11:41,
+        Tổng tiền phải thanh toán: TỔNG TIỀN PHẢI T.TOÁN là 30.900
+      output: >
+        Câu hỏi:
+        Nhìn vào bức ảnh bên trên, hóa đơn này được in ra ở đâu?
+        ===
+        Câu trả lời:
+        Hóa đơn trên được xuất ra ở Siêu thị VinCommerce.
+        ===
+        Câu hỏi:
+        Nói cho tôi một vài hiểu biết của bạn về siêu thị VinCommerce.
+        ===
+        Câu trả lời:
+        VinCommerce là một trong những chuỗi bán lẻ hàng đầu tại Việt Nam, bao gồm các cửa hàng tiện lợi VinMart+ và các siêu thị VinMart. VinCommerce là một phần của Tập đoàn Vingroup, một trong những tập đoàn tư nhân lớn nhất Việt Nam, hoạt động trong nhiều lĩnh vực khác nhau như bất động sản, bán lẻ, giáo dục và y tế.
+        ===
+        Câu hỏi:
+        Người mua hàng đã phải thanh toán bao nhiêu tiền? Trả lời y nguyên tổng tiền thanh toán được in trên hóa đơn và yêu cầu đọc thành chữ.
+        ===
+        Câu trả lời:
+        Khi nhìn vào bức ảnh trên rõ ràng thấy Tổng tiền phải thanh toán sau khi trừ thuế của người mua hàng là 30.900, đọc thành chữ là ba mười nghìn chín trăm ngàn đồng chẵn.
+        ===
+        Câu hỏi:
+        Siêu thị xuất ra ảnh hóa đơn trên nằm ở vị trí nào? Yêu cầu ghi lại y nguyên địa chỉ được in trong hóa đơn.
+        ===
+        Câu trả lời:
+        Siêu thị VinCommerce nằm ở VM + QNH Dự án quỹ đất đường sắt, DA QĐ doc tuyến ĐS Tổ 3 Khu 2, P.Cẩm Sơn, TP.Cẩm Phả, T.QN.
+        ===
+        Câu hỏi:
+        Hóa đơn trên đã xuất vào thời gian nào? Chỉ rõ ngày, tháng, năm và ngày giờ được in trong hóa đơn.
+        ===
+        Câu trả lời:
+        Cửa hàng này đã xuất hóa đơn vào: ngày 15 tháng 8 năm 2020 vào lúc 11:41
+
+
